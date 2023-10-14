@@ -50,31 +50,34 @@ abstract class NoteDatabase : RoomDatabase()  {
             return INSTANCE!!
         }
 
+        /**
+         * simulates adding records to the db one day apart for each new record
+        * */
         fun prePopulateData(): List<NoteEntity> {
-            val currentDate = System.currentTimeMillis().toDuration(DurationUnit.DAYS)
-            val yesterday = currentDate - 1.days
-            val twoDaysAgo = currentDate - 2.days
-            val threeDaysAgo = currentDate - 3.days
+            val today = System.currentTimeMillis().toDuration(DurationUnit.MILLISECONDS).inWholeDays
+            val yesterday = today - 1.days.inWholeDays
+            val twoDaysAgo = today - 2.days.inWholeDays
+            val threeDaysAgo = today - 3.days.inWholeDays
             return listOf(
                 NoteEntity(
                     title = "Manfaat lari",
                     note = "Lari pagi membantu menaikkan semangat setiap hari",
-                    createdTime = currentDate.inWholeMilliseconds
+                    createdTime = threeDaysAgo
                 ),
                 NoteEntity(
                     title = "Daftar Belanja",
                     note = "Sembako,Baju Anak,sereal,buah-buahan,kacang,wortel,sop-sopan",
-                    createdTime = yesterday.inWholeMilliseconds
+                    createdTime = twoDaysAgo
                 ),
                 NoteEntity(
                     title = "Jam meeting",
                     note = "13.00,16.00,21.00",
-                    createdTime = twoDaysAgo.inWholeMilliseconds
+                    createdTime = yesterday
                 ),
                 NoteEntity(
                     title = "Karyawan Baru",
                     note = "Satria adhi,Reyhan maulana yafi,Amelia carla,Shindy Pradnya saraswati,Septiani,Eko Sanjaya",
-                    createdTime = threeDaysAgo.inWholeMilliseconds
+                    createdTime = today
                 ),
             )
         }

@@ -29,8 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.daya.obsoletedatadeleteexample.data.NoteEntity
 import com.daya.obsoletedatadeleteexample.ui.theme.ObsoleteDataDeleteExampleTheme
+import com.daya.obsoletedatadeleteexample.worker.DeleteNoteWorker
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +60,17 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        deleteOldestData()
+    }
+
+    private fun deleteOldestData() {
+        val deleteWorker = OneTimeWorkRequestBuilder<DeleteNoteWorker>().build()
+        WorkManager.getInstance(this)
+            .enqueueUniqueWork("delete_worker_tag",ExistingWorkPolicy.REPLACE,deleteWorker)
     }
 }
 
