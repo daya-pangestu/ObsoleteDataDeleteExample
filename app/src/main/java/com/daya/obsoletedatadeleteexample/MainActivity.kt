@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = {
                                 Text(
-                                    text = "Item On Database",
+                                    text = "Note List",
                                     color = MaterialTheme.colorScheme.onPrimary
                                 )
                             },
