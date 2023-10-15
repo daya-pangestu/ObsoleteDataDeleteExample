@@ -60,23 +60,23 @@ abstract class NoteDatabase : RoomDatabase()  {
             val threeDaysAgo = today - 3.days.inWholeDays
             return listOf(
                 NoteEntity(
-                    title = "Manfaat lari",
-                    note = "Lari pagi membantu menaikkan semangat setiap hari",
+                    title = "Benefit of running",
+                    note = "Routinely run every morning could help boost the mood all day long",
                     createdTime = threeDaysAgo
                 ),
                 NoteEntity(
-                    title = "Daftar Belanja",
-                    note = "Sembako,Baju Anak,sereal,buah-buahan,kacang,wortel,sop-sopan",
+                    title ="Grocery list",
+                    note = "eggs,paper,chili,bread,milk,peanuts,salt",
                     createdTime = twoDaysAgo
                 ),
                 NoteEntity(
-                    title = "Jam meeting",
+                    title = "Today's Meeting",
                     note = "13.00,16.00,21.00",
                     createdTime = yesterday
                 ),
                 NoteEntity(
-                    title = "Karyawan Baru",
-                    note = "Satria adhi,Reyhan maulana yafi,Amelia carla,Shindy Pradnya saraswati,Septiani,Eko Sanjaya",
+                    title = "New Employees",
+                    note = "Satria adhi,Reyhan maulana yafi,Amelia carla, Shindy Pradnya saraswati,Septiani, Eko Sanjaya, Ayu rohmana",
                     createdTime = today
                 ),
             )
