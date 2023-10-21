@@ -30,12 +30,15 @@ import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.daya.obsoletedatadeleteexample.data.NoteEntity
 import com.daya.obsoletedatadeleteexample.ui.theme.ObsoleteDataDeleteExampleTheme
 import com.daya.obsoletedatadeleteexample.worker.DeleteNoteWorker
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -70,9 +73,16 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun deleteOldestData() {
-        val deleteWorker = OneTimeWorkRequestBuilder<DeleteNoteWorker>().build()
+        val deleteWorker =
+            PeriodicWorkRequestBuilder<DeleteNoteWorker>(15, TimeUnit.MINUTES)
+                .setInitialDelay(15,TimeUnit.MINUTES)
+                .build()
         WorkManager.getInstance(this)
-            .enqueueUniqueWork("delete_worker_tag",ExistingWorkPolicy.REPLACE,deleteWorker)
+            .enqueueUniquePeriodicWork(
+                "delete_worker_tag",
+                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+                deleteWorker
+            )
     }
 }
 

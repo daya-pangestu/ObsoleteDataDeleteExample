@@ -12,10 +12,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 
-@Database(
-    entities = [NoteEntity::class],
-    version = 1
-)
+@Database(entities = [NoteEntity::class], version = 1)
 abstract class NoteDatabase : RoomDatabase()  {
     abstract fun noteDao() : NoteDao
     companion object{
